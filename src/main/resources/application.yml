@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mysql://120.24.161.55:3306/mycat2?useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    username: root
+    password: krMw6ZdyB(2l
+    driver-class-name: com.mysql.jdbc.Driver
