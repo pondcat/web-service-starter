@@ -9,8 +9,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class WebServiceStarterApplicationTests {
 
-    @Test
-    public void contextLoads() {
-    }
+	@Test
+	public void contextLoads() {
+	}
+
+	public void ks() {
+
+	}
+
+	public void wek() {
+		String hh = "sdfwejrlkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkksdf";
+
+	}
 
 }
