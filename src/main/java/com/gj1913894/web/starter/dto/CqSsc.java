@@ -1,11 +1,12 @@
 package com.gj1913894.web.starter.dto;
 
 
-public class CqSsc {
+public class CqSsc<T> {
     private Integer rows;
     private String code;
     private String info;
-    private Result[] data;
+
+	private T[] data;
 
     public Integer getRows() {
         return rows;
@@ -31,11 +32,11 @@ public class CqSsc {
         this.info = info;
     }
 
-    public Result[] getData() {
+	public T[] getData() {
         return data;
     }
 
-    public void setData(Result[] data) {
+	public void setData(T[] data) {
         this.data = data;
     }
 

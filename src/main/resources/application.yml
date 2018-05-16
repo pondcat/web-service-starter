@@ -7,3 +7,8 @@ spring:
 logging:
   level:
     com.gj1913894.web.starter.config: debug
+
+feign:
+  client:
+    scan:
+      pkg: com.gj1913894.web.starter.service.third
