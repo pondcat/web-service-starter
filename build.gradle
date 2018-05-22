@@ -30,6 +30,7 @@ ext {
 }
 
 configurations {
+	// spring actuator strongly depends on jackson-databind, and they refused to make a change
 //    all*.exclude group:'com.fasterxml.jackson.core', module:'jackson-core'
 //    all*.exclude group:'com.fasterxml.jackson.core', module:'jackson-annotations'
 //    all*.exclude group:'com.fasterxml.jackson.core', module:'jackson-databind'
@@ -58,6 +59,11 @@ dependencies {
 	// alibaba
 	compile('com.alibaba:fastjson:1.2.47')
 	// swagger2
+	/*if (!hasProperty("spring.profiles.active") || !getProperty("spring.profiles.active").toString().contains("prod")) {
+		compile "io.springfox:springfox-swagger2:2.9.0"
+		compile "io.springfox:springfox-bean-validators:2.9.0"
+		compile 'io.springfox:springfox-swagger-ui:2.9.0'
+	}*/
 	compile "io.springfox:springfox-swagger2:2.9.0"
 	compile "io.springfox:springfox-bean-validators:2.9.0"
 	compile 'io.springfox:springfox-swagger-ui:2.9.0'

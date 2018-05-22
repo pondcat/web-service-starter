@@ -12,3 +12,5 @@ feign:
   client:
     scan:
       pkg: com.gj1913894.web.starter.service.third
+server:
+  port: 8000

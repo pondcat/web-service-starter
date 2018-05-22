@@ -1,5 +1,7 @@
 package com.gj1913894.web.starter.entity;
 
+import java.util.Date;
+
 /**
  * @author gejian
  */
@@ -13,6 +15,16 @@ public class User implements DbEntity<Long> {
 	private String passwd;
 
 	private String nickname;
+
+	private Date date;
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	@Override
 	public Long getId() {
