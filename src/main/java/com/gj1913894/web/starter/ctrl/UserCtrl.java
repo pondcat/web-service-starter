@@ -13,7 +13,7 @@ import javax.validation.Valid;
  * @author 孙权
  */
 @RestController
-@RequestMapping("user")
+@RequestMapping("api/user")
 public class UserCtrl {
 
 	@Autowired
