@@ -83,7 +83,10 @@ public class Swagger2Config {
 					parameter("ver", "客户端版本号", modelRef, "query"),
 					parameter("token", "令牌", modelRef, "cookie"),
 					parameter("token", "令牌", modelRef, "header"),
-					parameter("token", "令牌", modelRef, "query"));
+					parameter("token", "令牌", modelRef, "query"),
+					parameter("regId", "推送绑定设备id", modelRef, "cookie"),
+					parameter("regId", "推送绑定设备id", modelRef, "header"),
+					parameter("regId", "推送绑定设备id", modelRef, "query"));
 		}
 		return commonParameters;
 	}
