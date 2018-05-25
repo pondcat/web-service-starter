@@ -3,7 +3,7 @@ package com.gj1913894.web.starter.service;
 import java.time.LocalDateTime;
 
 /**
- * @author 孙权
+ * @author gejian
  */
 public interface DemoService {
 	LocalDateTime serve();
