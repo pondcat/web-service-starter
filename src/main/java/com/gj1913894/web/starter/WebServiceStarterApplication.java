@@ -1,16 +1,15 @@
 package com.gj1913894.web.starter;
 
-import com.gj1913894.web.starter.mapper.UserMapper;
+import com.gj1913894.web.starter.mapper.DemoMapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration;
 
 /**
  * @author gejian
  */
-@MapperScan(basePackageClasses = UserMapper.class)
-@SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
+@MapperScan(basePackageClasses = DemoMapper.class)
+@SpringBootApplication
 public class WebServiceStarterApplication {
 
 	public static void main(String[] args) {

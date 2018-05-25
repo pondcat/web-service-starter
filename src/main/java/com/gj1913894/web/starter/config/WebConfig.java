@@ -4,19 +4,26 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 /**
+ *
+ * 启用@EnableWebMvc后, 会导致某些spring-boot-starter自动配置失效, 如springfox自动配置的webjars和swagger-ui等资源映射失效,
+ * 需手动配置{@link #addResourceHandlers(ResourceHandlerRegistry)}:
+ * <code>/webjars/** -> classpath:/META-INF/resources/webjars/, swagger-ui.html -> classpath:/META-INF/resources/</code>
  * @author gejian at 2018/5/13 23:46
  */
 @Configuration
-@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
 	@Override
@@ -35,16 +42,25 @@ public class WebConfig implements WebMvcConfigurer {
 		converters.add(0, converter);
 	}
 
-	/**
-	 * 启用@EnableWebMvc后, 会导致springfox自动配置的webjars和swagger-ui等资源映射失效, 这里需手动配置下
-	 *
-	 * @param registry
-	 */
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/webjars/**")
-				.addResourceLocations("classpath:/META-INF/resources/webjars/");
-		registry.addResourceHandler("swagger-ui.html")
-				.addResourceLocations("classpath:/META-INF/resources/");
+	public void addInterceptors(InterceptorRegistry registry) {
+		registry.addInterceptor(new HandlerInterceptor() {
+			@Override
+			public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+				// 记录请求参数到日志
+				System.out.println("prehandle");
+				return true;
+			}
+
+			@Override
+			public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+				System.out.println("postHandle");
+			}
+
+			@Override
+			public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+				System.out.println("afterCompletion");
+			}
+		}).addPathPatterns("/api/**");
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.ConversionNotSupportedException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.http.converter.HttpMessageNotWritableException;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -24,11 +25,13 @@ import org.springframework.web.context.request.async.AsyncRequestTimeoutExceptio
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author gejian at 2018/5/13 21:55
  */
 @RestController
-@ControllerAdvice(basePackages = "com.gj1913894.web.starter.api.ctrl")
+@ControllerAdvice(annotations = {RestController.class, Controller.class})
 public class GlobalControllerConfig {
 	private static final Logger log = LoggerFactory.getLogger(GlobalControllerConfig.class);
 
@@ -43,18 +46,21 @@ public class GlobalControllerConfig {
 	}
 
 	@ExceptionHandler(BindException.class)
-	private Result<Void> handleBindException(BindException ex) {
+	private Result<Void> handleBindException(BindException ex, HttpServletRequest request) {
 		// 只记录第一个参数错误
 		FieldError fieldError = ex.getFieldError();
-		if (log.isDebugEnabled()) {
-			log.debug("bindException: {}.{}:{}, {}", fieldError.getObjectName(), fieldError.getField(), fieldError.getRejectedValue(), fieldError.getDefaultMessage());
+		if (fieldError == null) {
+			log.debug("bindException but no fieldError: {}", ex.getMessage());
+			return Result.error(ex.getMessage());
 		}
+		log.debug("bindException: {}.{}:{}, {}", fieldError.getObjectName(), fieldError.getField(), fieldError.getRejectedValue(), fieldError.getDefaultMessage());
 		return Result.error(fieldError.getDefaultMessage());
 	}
 
 	@ExceptionHandler(MissingServletRequestPartException.class)
 	private Result handleMissingServletRequestPartException(MissingServletRequestPartException ex) {
-		return null;
+		log.debug("missing part exception: {}", ex.getMessage());
+		return Result.error(ex.getMessage());
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -115,5 +121,16 @@ public class GlobalControllerConfig {
 	@ExceptionHandler(BusinessException.class)
 	private Result handleBusinessException(BusinessException ex) {
 		return null;
+	}
+
+	@ExceptionHandler(Exception.class)
+	private Result handleException(Exception ex) {
+		System.out.println("handleException");
+		return null;
+	}
+
+	private String traceRequest(HttpServletRequest request) {
+		String requestURI = request.getRequestURI();
+		return "";
 	}
 }
