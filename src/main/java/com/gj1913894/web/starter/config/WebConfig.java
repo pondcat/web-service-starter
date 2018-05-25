@@ -47,7 +47,11 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addInterceptor(new HandlerInterceptor() {
 			@Override
 			public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-				// 记录请求参数到日志
+				// 非api方法直接放行
+				if (!request.getRequestURI().startsWith("api")) {
+					return true;
+				}
+				System.out.println(handler.getClass());
 				System.out.println("prehandle");
 				return true;
 			}
