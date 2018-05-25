@@ -3,4 +3,7 @@
  *
  * @author gejian
  */
+@NonNullApi
 package com.gj1913894.web.starter.service.http;
+
+import org.springframework.lang.NonNullApi;
