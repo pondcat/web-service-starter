@@ -1,6 +1,7 @@
 package com.gj1913894.web.starter.config;
 
 import com.gj1913894.web.starter.dto.Result;
+import com.gj1913894.web.starter.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.ConversionNotSupportedException;
@@ -27,7 +28,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
  * @author gejian at 2018/5/13 21:55
  */
 @RestController
-@ControllerAdvice(basePackages = "com.gj1913894.web.starter.ctrl")
+@ControllerAdvice(basePackages = "com.gj1913894.web.starter.api.ctrl")
 public class GlobalControllerConfig {
 	private static final Logger log = LoggerFactory.getLogger(GlobalControllerConfig.class);
 
@@ -111,4 +112,8 @@ public class GlobalControllerConfig {
 		return null;
 	}
 
+	@ExceptionHandler(BusinessException.class)
+	private Result handleBusinessException(BusinessException ex) {
+		return null;
+	}
 }

@@ -1,7 +1,7 @@
 package com.gj1913894.web.starter.config;
 
 import com.alibaba.fastjson.JSON;
-import com.gj1913894.web.starter.service.third.SscService;
+import com.gj1913894.web.starter.service.http.SscService;
 import feign.*;
 import feign.codec.Decoder;
 import feign.codec.Encoder;

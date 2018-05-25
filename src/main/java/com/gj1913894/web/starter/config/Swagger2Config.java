@@ -78,22 +78,19 @@ public class Swagger2Config {
 		if (commonParameters == null) {
 			ModelRef modelRef = new ModelRef("string");
 			commonParameters = newArrayList(
-					parameter("ver", "客户端版本号", modelRef, "cookie"),
-					parameter("ver", "客户端版本号", modelRef, "header"),
-					parameter("ver", "客户端版本号", modelRef, "query"),
-					parameter("token", "令牌", modelRef, "cookie"),
-					parameter("token", "令牌", modelRef, "header"),
-					parameter("token", "令牌", modelRef, "query"),
-					parameter("regId", "推送绑定设备id", modelRef, "cookie"),
-					parameter("regId", "推送绑定设备id", modelRef, "header"),
-					parameter("regId", "推送绑定设备id", modelRef, "query"));
+					parameter("ver", "客户端版本号", modelRef, "cookie", false),
+					parameter("ver", "客户端版本号", modelRef, "header", false),
+					parameter("ver", "客户端版本号", modelRef, "query", false),
+					parameter("token", "令牌", modelRef, "cookie", false),
+					parameter("token", "令牌", modelRef, "header", false),
+					parameter("token", "令牌", modelRef, "query", false));
 		}
 		return commonParameters;
 	}
 
-	private Parameter parameter(String name, String description, ModelRef modelRef, String parameterType) {
+	private Parameter parameter(String name, String description, ModelRef modelRef, String parameterType, boolean required) {
 		return new ParameterBuilder().name(name).description(description).modelRef(modelRef)
-				.parameterType(parameterType).build();
+				.parameterType(parameterType).required(required).build();
 	}
 
 	@Bean
