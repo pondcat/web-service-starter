@@ -1,3 +1,4 @@
+#公共/开发配置
 spring:
   datasource:
     url: jdbc:mysql://120.24.161.55:3306/mycat2?useUnicode=true&characterEncoding=UTF-8&useSSL=false
@@ -6,8 +7,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
 logging:
   level:
-    com.gj1913894.web.starter.config: debug
-
+    com.gj1913894.web.starter: debug
 feign:
   client:
     scan:
