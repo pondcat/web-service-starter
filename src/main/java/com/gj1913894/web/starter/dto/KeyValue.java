@@ -70,7 +70,7 @@ public abstract class KeyValue<K, V> {
 	 * @param map
 	 * @return
 	 */
-	public List<KeyValue<K, V>> from(Map<K, V> map) {
+	public static <K, V> List<KeyValue<K, V>> from(Map<K, V> map) {
 		if (map == null || map.isEmpty()) {return Collections.emptyList();}
 		List<KeyValue<K, V>> list = new ArrayList<>(map.size());
 		for (Map.Entry<K, V> entry : map.entrySet()) {
@@ -85,7 +85,7 @@ public abstract class KeyValue<K, V> {
 	 * @param entry
 	 * @return
 	 */
-	public KeyValue<K, V> from(Map.Entry<K, V> entry) {
+	public static <K, V> KeyValue<K, V> from(Map.Entry<K, V> entry) {
 		return of(entry.getKey(), entry.getValue());
 	}
 
@@ -95,7 +95,7 @@ public abstract class KeyValue<K, V> {
 	 * @param list
 	 * @return
 	 */
-	public Map<K, V> to(Collection<KeyValue<K, V>> list) {
+	public static <K, V> Map<K, V> to(Collection<KeyValue<K, V>> list) {
 		if (list == null || list.isEmpty()) {return Collections.emptyMap();}
 		Map<K, V> map = new HashMap<>((int) (list.size() / 0.75) + 1);
 		for (KeyValue<K, V> kv : list) {
