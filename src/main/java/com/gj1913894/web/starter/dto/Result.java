@@ -49,8 +49,10 @@ public class Result<T> {
 		this.data = data;
 	}
 
+	private static final Result<Void> OK = new Result<>(CODE_SUCCESS, null, null);
+
 	public static Result<Void> ok() {
-		return new Result<>(CODE_SUCCESS, null, null);
+		return OK;
 	}
 
 	public static <T> Result<T> ok(T data) {
