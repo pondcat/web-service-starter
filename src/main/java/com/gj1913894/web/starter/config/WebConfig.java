@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -47,23 +48,23 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addInterceptor(new HandlerInterceptor() {
 			@Override
 			public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-				// 非api方法直接放行
-				if (!request.getRequestURI().startsWith("api")) {
-					return true;
+				String matchingPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
+				if (matchingPattern == null) {
+					// 以/api开头的必须有handlerMapping处理
+					return false;
 				}
-				System.out.println(handler.getClass());
-				System.out.println("prehandle");
+				// 查询用户是否具备访问权限
+				matchingPattern = request.getMethod() + " " + matchingPattern;
+				// todo 权限控制
 				return true;
 			}
 
 			@Override
 			public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-				System.out.println("postHandle");
 			}
 
 			@Override
 			public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-				System.out.println("afterCompletion");
 			}
 		}).addPathPatterns("/api/**");
 	}
