@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author gejian
  */
+@tk.mybatis.spring.annotation.MapperScan(basePackages = "com.gj1913894.web.starter.mapper")
 @SpringBootApplication
 public class WebServiceStarterApplication {
 

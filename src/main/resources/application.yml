@@ -2,7 +2,7 @@
 server:
   port: 8000
 
-debug: true
+debug: false
 logging:
   level:
     com.gj1913894.web.starter: debug
@@ -25,6 +25,14 @@ feign:
     scan:
       pkg: com.gj1913894.web.starter.service.http
 
+#mybatis & mapper
+mybatis:
+  mapper-locations: classpath:/com/gj1913894/web/starter/mapper/*Mapper.xml
+  type-aliases-package: com.gj1913894.web.starter.entity
 
-#mybatis.type-aliases-package=tk.mybatis.springboot.model
-#mybatis.mapper-locations=classpath:mapper/*.xml
+mapper:
+#  mappers: com.gj1913894.web.starter.mapper
+  not-empty: false
+  identity: MYSQL
+  use-java-type: true
+  style: normal

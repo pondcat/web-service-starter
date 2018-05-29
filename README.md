@@ -11,3 +11,4 @@ ver, 客户端版本号, 后端测试发包时, 不同版本不同端口号, 由
 
 # todo list
 分布式日志系统-mdc处理  
+提示abel533, InsertListMapper增加对于非自增主键的支持
