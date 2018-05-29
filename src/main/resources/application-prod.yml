@@ -1,5 +1,17 @@
 #生产配置
 server:
   port: 80
+
+debug: false
 logging:
-  level: info
+  level:
+    org.mariadb.jdbc: info
+
+spring:
+  datasource:
+    url: jdbc:mariadb://120.24.161.55:3306/mycat2
+    username: root
+    password: krMw6ZdyB(2l
+    hikari:
+      data-source-properties:
+        enablePacketDebug: false
