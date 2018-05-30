@@ -2,11 +2,12 @@
 server:
   port: 8000
 
-debug: false
+debug: true
 logging:
   level:
     com.gj1913894.web.starter: debug
     org.mariadb.jdbc: debug
+    org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener: info
 
 spring:
   datasource:
