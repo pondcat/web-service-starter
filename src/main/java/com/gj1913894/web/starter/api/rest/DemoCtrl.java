@@ -1,6 +1,7 @@
 package com.gj1913894.web.starter.api.rest;
 
 import com.gj1913894.web.starter.dto.Result;
+import com.gj1913894.web.starter.entity.User;
 import com.gj1913894.web.starter.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +30,8 @@ public class DemoCtrl {
 	}
 
 	@GetMapping("serve")
-	public Result<String> serve() {
+	public Result<String> serve(User user) {
+		System.out.println(user);
 		LocalDateTime dateTime = demoService.serve();
 		return Result.ok(dateTime.toString());
 	}
