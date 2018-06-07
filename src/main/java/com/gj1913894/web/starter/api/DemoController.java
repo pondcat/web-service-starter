@@ -1,22 +1,21 @@
-package com.gj1913894.web.starter.api.rest;
+package com.gj1913894.web.starter.api;
 
-import com.gj1913894.web.starter.dto.Result;
 import com.gj1913894.web.starter.entity.User;
 import com.gj1913894.web.starter.service.DemoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import pondcat.commons.combine.Result;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author gejian
  */
 @RestController
-@RequestMapping("/api/rest/demo")
-public class DemoCtrl {
+@RequestMapping("/api/demo")
+public class DemoController {
 	private @Autowired DemoService demoService;
 
 	@GetMapping("ss")
@@ -34,5 +33,18 @@ public class DemoCtrl {
 		System.out.println(user);
 		LocalDateTime dateTime = demoService.serve();
 		return Result.ok(dateTime.toString());
+	}
+
+	@PostMapping(value = "tt", params = {"id=1"})
+	public void t1(@RequestBody User user) {
+		System.out.println(user.getId());
+	}
+
+	@RequestMapping("tt")
+	public User t2(User user) {
+		user.setCtime(LocalDateTime.now());
+		user.setMtime(new Date());
+		user.setNow(Instant.now());
+		return user;
 	}
 }

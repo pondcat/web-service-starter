@@ -1,4 +1,4 @@
-package com.gj1913894.web.starter.mapper;
+package com.gj1913894.web.starter.dao;
 
 import com.gj1913894.web.starter.entity.User;
 import tk.mybatis.mapper.common.Mapper;

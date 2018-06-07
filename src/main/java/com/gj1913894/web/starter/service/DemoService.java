@@ -1,14 +1,14 @@
 package com.gj1913894.web.starter.service;
 
-import com.gj1913894.web.starter.entity.DbEntity;
+import com.gj1913894.web.starter.dao.UserMapper;
 import com.gj1913894.web.starter.entity.User;
-import com.gj1913894.web.starter.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cglib.beans.BeanCopier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
+import pondcat.commons.combine.sql.entity.TableEntity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -34,7 +34,7 @@ public class DemoService implements Serializable {
 				userMapper.insert(user);
 			}
 		});
-		BeanCopier beanCopier = BeanCopier.create(User.class, DbEntity.class, true);
+		BeanCopier beanCopier = BeanCopier.create(User.class, TableEntity.class, true);
 
 		return LocalDateTime.now();
 	}

@@ -1,4 +1,4 @@
-package com.gj1913894.web.starter.service.http;
+package com.gj1913894.web.starter.manager;
 
 import com.gj1913894.web.starter.config.FeignClient;
 import com.gj1913894.web.starter.dto.CqSsc;

@@ -1,4 +1,4 @@
-package com.gj1913894.web.starter.mapper;
+package com.gj1913894.web.starter.dao;
 
 /**
  * @author gejian

@@ -1,8 +1,8 @@
-= 实体类
+== 实体类
 * 必须implements TableEntity/TableCreatable, 这些接口定义了主键, 创建者, 创建时间, 更新者, 更新时间
 * 某个实体类具有特定的行为，直接在该实体上新增方法即可，比如在FileInfo实体上增加getUrl()方法
 
-= dao(对mybatis指mapper)
+== dao(对mybatis指mapper)
 * 采用baomidou的mybatis_plus封装, 支持热刷新mapper.xml
 * 无需再拆分为两层:dao -> mapper. 如需mapper中无法直接查询的结果时, 直接在mapper中增加default方法, 如:
 [source,java]
@@ -16,14 +16,14 @@ UserMapper{
 * 简单sql可在mapper方法上用注解标注, 无需写入到xml
 * 分页禁止手写countSql, 再写pageSql, 采用分页插件处理. 如可只分页而不count时, 不要count, mysql count查询总是相当的慢
 
-= service
+== service
 * 继承baseService, 自带对应mapper的默认方法, 如insert, insertSelective, update, updateSelective...
 * serviceA需增删改实体类B时, 因增删改往往会涉及一些前置处理, 请注入serviceB, 调用serviceB的增删改方法, 而不是daoB/mapperB的增删改方法
 * serviceA需查询实体类B时, 直接注入daoB/mapperB处理, 原因有二:
 ** 可按需查询所需字段, 减少service方法书写
 ** 降低service查询耦合, 由于service查询方法一般是为某个页面或api服务，不具有一般性，避免调用service查询时带出许多不必要的查询
 
-= controller
+== controller
 * 入参传值, 可直接用实体类或继承实体类的DTO类进行接收, 不需要做任何转换即可与service无缝对接
 * 参数验证采用Hibernate Validator注解验证.
 某个实体类被多个DTO继承时, 每个DTO对实体类中字段的验证需求不一致时:
@@ -41,8 +41,10 @@ class UserController{
     void update(@Validated(UserCreateDTO.class) UserCreateDTO c);
 }
 
-= 异常
-* 自定义异常, 建议继承自RuntimeException. 禁止通过抛出异常进行分支跳转, 此种情况请通过返回值来控制, 如返回:
+== 异常
+* 绝大部分情况无需区分异常类型, 无脑抛出BusinessException即可
+* 如事物可控, 也可采用ExceptionUtil.unsafe(Throwable)包装受检异常抛出, 具体参看ExceptionUtil.unsafe(Throwable)文档
+* 确有需要区分异常类型, 继承BusinessException. 禁止通过抛出异常进行分支跳转, 此种情况请通过返回值来控制, 如返回:
 [source,java]
 Pair<Integer, String> calculateFee(Order order) {
     if(...) {
@@ -54,20 +56,30 @@ Pair<Integer, String> calculateFee(Order order) {
     return Pair.of(fee, null);
 }
 
-= 事物
+== 事物
 * spring默认事物回滚规则为了兼容EJB, 只回滚RuntimeException和Error, 不回滚受检异常.
 如需回滚受检异常, 可直接指定:
 [source,java]
 @Transactional(rollbackFor = Throwable.class)
 
-= 日志
-==== 日志接口
+== 日志
+=== 日志接口
 logger一律采用slf4j门面日志中的logger, 方便以后更换日志实现框架
 [source,java]
 private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Xxx.class);
 
-==== 日志级别
+=== 日志级别
 * 禁止通篇log.debug级别的日志, 对于重要非异常信息, 至少info级别, 异常信息原则上error级别, 预期可处理异常信息可降级至debug或无日志.
 异常但业务可降级继续, 至少warn级别.
 * 线上日志打印级别至少info, 禁止为了能线上显示日志, 通篇log.info.
+* info及以下级别日志采用占位符或条件判断, 未加条件判断时, 禁止字符串拼接. info级别以上日志确定要输出, 直接拼接字符串, 避免占位符查找替换开销.
+[source,java]
+logger.debug("Processing trade with id: {} symbol : {} ", id, symbol);
+if (logger.isDebugEnabled()) {
+  logger.debug("Processing trade with id: " + id + " symbol: " + symbol.getMessage());
+}
 * 入参日志统一在servlet的filter中处理
+
+== 时间
+建议全面采用jdk8的日期时间类LocalDateTime, LocalDate, LocalTime.
+jackson默认时区为UTC (NOT local timezone), 在序列化带时区的日期时间(Date)时, 必须指明时区为东八区, 因此尽量避免使用jackson, 用fastjson代替

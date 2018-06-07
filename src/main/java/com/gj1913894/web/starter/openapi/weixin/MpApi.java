@@ -1,4 +1,4 @@
-package com.gj1913894.web.starter.api.open;
+package com.gj1913894.web.starter.openapi.weixin;
 
 import com.google.common.hash.Hashing;
 import com.google.common.io.BaseEncoding;
@@ -22,9 +22,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 @RestController
-@RequestMapping("api/open/wechat")
-public class WechatCtrl {
-	private static final Logger log = LoggerFactory.getLogger(WechatCtrl.class);
+@RequestMapping("/openapi/weixin/mp")
+public class MpApi {
+	private static final Logger log = LoggerFactory.getLogger(MpApi.class);
 	private static final String token = "pondcat123";
 	private static final String appId = "wxe1ddcd147d03882f";
 	private static final String appsecret = "d55157efca7c3d31449be3b538914001";
