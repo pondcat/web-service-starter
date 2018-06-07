@@ -1,6 +1,12 @@
-== 实体类
+== bean
+=== 实体类
 * 必须implements TableEntity/TableCreatable, 这些接口定义了主键, 创建者, 创建时间, 更新者, 更新时间
 * 某个实体类具有特定的行为，直接在该实体上新增方法即可，比如在FileInfo实体上增加getUrl()方法
+=== DTO
+* 与前端交互中, 实体类不能满足前端需求时, 新建DTO类与前端进行数据交互.
+* DTO类至少需对service层可见, 尽量对dao层可见
+* DTO类严禁继承自实体类, 此时会暴露不必要的字段, 不利于swagger等集成文档, 也不利于hibernate-validator验证
+* DTO类与实体类通过BeanUtil.copyProperties拷贝同名同类型字段, 其余字段手动处理, 方便重构
 
 == dao(对mybatis指mapper)
 * 采用baomidou的mybatis_plus封装, 支持热刷新mapper.xml
@@ -24,21 +30,43 @@ UserMapper{
 ** 降低service查询耦合, 由于service查询方法一般是为某个页面或api服务，不具有一般性，避免调用service查询时带出许多不必要的查询
 
 == controller
-* 入参传值, 可直接用实体类或继承实体类的DTO类进行接收, 不需要做任何转换即可与service无缝对接
-* 参数验证采用Hibernate Validator注解验证.
-某个实体类被多个DTO继承时, 每个DTO对实体类中字段的验证需求不一致时:
+* 入参传值, 可直接用实体类或DTO类进行接收, DTO类可直接传递到service层
+* 参数验证采用hibernate-validator注解验证.
+尽量避免使用hibernate-validator的分组功能, 这会引入不必要的空类, 并使验证复杂难读, 也可绕开验证
 [source,java]
+// 错误
 class User{
-    // 特别地, 当不指明groups时, 默认groups为{javax.validation.groups.Default}.
-    @NotNull(groups = UserUpdateDTO.class)
-    @Null(groups = UserCreateDTO.class)
+    @NotNull(groups = UserUpdate.class)
+    @Null(groups = UserCreate.class)
     Integer id;
 }
-class UserUpdateDTO extends User{}
-class UserCreateDTO extends User{}
 class UserController{
-    void create(@Validated(UserUpdateDTO.class) UserUpdateDTO u);
-    void update(@Validated(UserCreateDTO.class) UserCreateDTO c);
+    void create(@Validated(UserCreate.class) UserUpdateDTO u){}
+    void update(@Validated(UserUpdate.class) UserCreateDTO c){}
+}
+// 正确
+class User{
+    @NotNull
+    Integer id;
+}
+class UserController{
+    void create(UserUpdateDTO u) {
+        u.id = null;
+    }
+    void update(@Validated UserCreateDTO c){}
+}
+// 正确
+class User{
+    Integer id;
+}
+class UserController{
+    void create(UserUpdateDTO u) {
+        u.id = null;
+    }
+    @PostMapping("/{id}")
+    void update(@PathVariable Integer id, UserCreateDTO c){
+        c.id = id;
+    }
 }
 
 == 异常

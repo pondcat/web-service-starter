@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pondcat.commons.combine.Result;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author gejian
@@ -31,7 +29,7 @@ public class DemoController {
 	@GetMapping("serve")
 	public Result<String> serve(User user) {
 		System.out.println(user);
-		LocalDateTime dateTime = demoService.serve();
+		LocalDateTime dateTime = demoService.serve(user);
 		return Result.ok(dateTime.toString());
 	}
 
@@ -43,8 +41,6 @@ public class DemoController {
 	@RequestMapping("tt")
 	public User t2(User user) {
 		user.setCtime(LocalDateTime.now());
-		user.setMtime(new Date());
-		user.setNow(Instant.now());
 		return user;
 	}
 }

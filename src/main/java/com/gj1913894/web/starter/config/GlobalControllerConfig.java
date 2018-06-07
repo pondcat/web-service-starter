@@ -49,10 +49,15 @@ public class GlobalControllerConfig {
 		// 只记录第一个参数错误
 		FieldError fieldError = ex.getFieldError();
 		if (fieldError == null) {
-			log.debug("bindException but no fieldError: {}", ex.getMessage());
+			if (log.isDebugEnabled()) {
+				log.debug("bindException but no fieldError: " + ex.getMessage());
+			}
 			return Result.error(ex.getMessage());
 		}
-		log.debug("bindException: {}.{}:{}, {}", fieldError.getObjectName(), fieldError.getField(), fieldError.getRejectedValue(), fieldError.getDefaultMessage());
+		if (log.isDebugEnabled()) {
+			log.debug("bindException: " + fieldError.getObjectName() + '.' + fieldError.getField() + ':' + fieldError
+					.getRejectedValue() + ", " + fieldError.getDefaultMessage());
+		}
 		return Result.error(fieldError.getDefaultMessage());
 	}
 
@@ -124,6 +129,7 @@ public class GlobalControllerConfig {
 
 	@ExceptionHandler(Exception.class)
 	private Result handleException(Exception ex) {
+		ex.printStackTrace();
 		System.out.println("handleException");
 		return null;
 	}

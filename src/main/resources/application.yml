@@ -1,6 +1,6 @@
 #公共/开发配置
 server:
-  port: 8100
+  port: 8000
 
 debug: true
 logging:

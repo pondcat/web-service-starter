@@ -5,9 +5,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.time.Instant;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author gejian at 2018/5/29 23:50
@@ -18,6 +17,7 @@ public class User {
 	@GeneratedValue(generator = "JDBC")
 	private Long id;
 
+	@NotNull
 	private String mobile;
 
 	private String realName;
@@ -27,12 +27,7 @@ public class User {
 	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime ctime;
 
-	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
-	private Date mtime;
-
-	private Long creator;
-
-	private Instant now;
+	private String role;
 
 	public Long getId() {
 		return id;
@@ -74,27 +69,11 @@ public class User {
 		this.ctime = ctime;
 	}
 
-	public Long getCreator() {
-		return creator;
+	public String getRole() {
+		return role;
 	}
 
-	public void setCreator(Long creator) {
-		this.creator = creator;
-	}
-
-	public Date getMtime() {
-		return mtime;
-	}
-
-	public void setMtime(Date mtime) {
-		this.mtime = mtime;
-	}
-
-	public Instant getNow() {
-		return now;
-	}
-
-	public void setNow(Instant now) {
-		this.now = now;
+	public void setRole(String role) {
+		this.role = role;
 	}
 }
