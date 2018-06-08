@@ -34,7 +34,7 @@ public class DemoController {
 		return Result.ok(dateTime.toString());
 	}
 
-	@PostMapping(value = "tt", params = {"id=1"})
+	@PostMapping(value = "tt", params = { "id=1" })
 	public void t1(@RequestBody User user) {
 		System.out.println(user.getId());
 	}

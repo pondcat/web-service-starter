@@ -38,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
 			if (name.startsWith("xml.MappingJackson",
 					"org.springframework.http.converter.".length())
 					|| name.startsWith("json.MappingJackson",
-					"org.springframework.http.converter.".length())) {
+							"org.springframework.http.converter.".length())) {
 				it.remove();
 			}
 		}

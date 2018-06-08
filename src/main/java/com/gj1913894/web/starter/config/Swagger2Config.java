@@ -34,10 +34,10 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
  *
  * @author gejian at 2018/5/22 8:53
  */
-@Profile({"!prod"})
+@Profile({ "!prod" })
 @Configuration
 @EnableSwagger2
-@Import({BeanValidatorPluginsConfiguration.class})
+@Import({ BeanValidatorPluginsConfiguration.class })
 public class Swagger2Config {
 
 	@Autowired
@@ -65,8 +65,8 @@ public class Swagger2Config {
 				.useDefaultResponseMessages(false).enableUrlTemplating(true)
 				.globalOperationParameters(operationParameters())
 				.tags(new Tag("Pet Service", "All apis relating to pets"))
-				// .additionalModels(typeResolver.resolve(AdditionalModel.class))
-				;
+		// .additionalModels(typeResolver.resolve(AdditionalModel.class))
+		;
 	}
 
 	private List<Parameter> operationParameters() {
@@ -109,8 +109,8 @@ public class Swagger2Config {
 								.modelRef(new ModelRef("string")).parameterType("query")
 								.required(true).build()))
 				.tags(new Tag("Pet Service", "All apis relating to pets"))
-				// .additionalModels(typeResolver.resolve(AdditionalModel.class))
-				;
+		// .additionalModels(typeResolver.resolve(AdditionalModel.class))
+		;
 	}
 
 	@Bean
@@ -132,8 +132,8 @@ public class Swagger2Config {
 								.modelRef(new ModelRef("string")).parameterType("query")
 								.required(true).build()))
 				.tags(new Tag("Pet Service", "All apis relating to pets"))
-				// .additionalModels(typeResolver.resolve(AdditionalModel.class))
-				;
+		// .additionalModels(typeResolver.resolve(AdditionalModel.class))
+		;
 	}
 
 	@Bean

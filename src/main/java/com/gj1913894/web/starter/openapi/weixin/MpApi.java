@@ -41,10 +41,10 @@ public class MpApi {
 	 */
 	@GetMapping(value = "serverVerify", produces = MediaType.TEXT_PLAIN_VALUE)
 	public String serverVerify(@Validated(Default.class) String signature,
-			@NotNull(groups = {Default.class}) String timestamp, String nonce,
+			@NotNull(groups = { Default.class }) String timestamp, String nonce,
 			String echostr, HttpServletResponse response) throws IOException {
 		// 明文模式, 不作校验
-		String[] arrays = {timestamp, nonce, token};
+		String[] arrays = { timestamp, nonce, token };
 		Arrays.sort(arrays);
 		String encode = DigestUtils
 				.sha1Hex((arrays[0] + arrays[1] + arrays[2]).getBytes());
