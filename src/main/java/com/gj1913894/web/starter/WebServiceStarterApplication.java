@@ -9,7 +9,8 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
  */
 @tk.mybatis.spring.annotation.MapperScan(basePackages = "com.gj1913894.web.starter.dao")
 @SpringBootApplication
-@ServletComponentScan({"com.gj1913894.web.starter.filter", "com.gj1913894.web.starter.listener"})
+@ServletComponentScan({"com.gj1913894.web.starter.filter",
+		"com.gj1913894.web.starter.listener"})
 public class WebServiceStarterApplication {
 
 	public static void main(String[] args) {

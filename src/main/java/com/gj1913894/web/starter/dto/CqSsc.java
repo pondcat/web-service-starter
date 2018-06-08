@@ -1,82 +1,89 @@
 package com.gj1913894.web.starter.dto;
 
-
 public class CqSsc<T> {
-    private Integer rows;
-    private String code;
-    private String info;
+
+	private Integer rows;
+
+	private String code;
+
+	private String info;
 
 	private T[] data;
 
-    public Integer getRows() {
-        return rows;
-    }
+	public Integer getRows() {
+		return rows;
+	}
 
-    public void setRows(Integer rows) {
-        this.rows = rows;
-    }
+	public void setRows(Integer rows) {
+		this.rows = rows;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public String getCode() {
+		return code;
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public String getInfo() {
-        return info;
-    }
+	public String getInfo() {
+		return info;
+	}
 
-    public void setInfo(String info) {
-        this.info = info;
-    }
+	public void setInfo(String info) {
+		this.info = info;
+	}
 
 	public T[] getData() {
-        return data;
-    }
+		return data;
+	}
 
 	public void setData(T[] data) {
-        this.data = data;
-    }
+		this.data = data;
+	}
 
-    public static class Result {
-        private String expect;
-        private String opencode;
-        private String opentime;
-        private Long opentimestamp;
+	public static class Result {
 
-        public String getExpect() {
-            return expect;
-        }
+		private String expect;
 
-        public void setExpect(String expect) {
-            this.expect = expect;
-        }
+		private String opencode;
 
-        public String getOpencode() {
-            return opencode;
-        }
+		private String opentime;
 
-        public void setOpencode(String opencode) {
-            this.opencode = opencode;
-        }
+		private Long opentimestamp;
 
-        public String getOpentime() {
-            return opentime;
-        }
+		public String getExpect() {
+			return expect;
+		}
 
-        public void setOpentime(String opentime) {
-            this.opentime = opentime;
-        }
+		public void setExpect(String expect) {
+			this.expect = expect;
+		}
 
-        public Long getOpentimestamp() {
-            return opentimestamp;
-        }
+		public String getOpencode() {
+			return opencode;
+		}
 
-        public void setOpentimestamp(Long opentimestamp) {
-            this.opentimestamp = opentimestamp;
-        }
-    }
+		public void setOpencode(String opencode) {
+			this.opencode = opencode;
+		}
+
+		public String getOpentime() {
+			return opentime;
+		}
+
+		public void setOpentime(String opentime) {
+			this.opentime = opentime;
+		}
+
+		public Long getOpentimestamp() {
+			return opentimestamp;
+		}
+
+		public void setOpentimestamp(Long opentimestamp) {
+			this.opentimestamp = opentimestamp;
+		}
+
+	}
 
 }

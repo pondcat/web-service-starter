@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/api/demo")
 public class DemoController {
+
 	private @Autowired DemoService demoService;
 
 	@GetMapping("ss")
@@ -43,4 +44,5 @@ public class DemoController {
 		user.setCtime(LocalDateTime.now());
 		return user;
 	}
+
 }

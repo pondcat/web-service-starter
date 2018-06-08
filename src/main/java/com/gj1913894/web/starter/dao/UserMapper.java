@@ -8,4 +8,5 @@ import tk.mybatis.mapper.common.special.InsertListMapper;
  * @author gejian at 2018/5/29 23:51
  */
 public interface UserMapper extends Mapper<User>, InsertListMapper<User> {
+
 }

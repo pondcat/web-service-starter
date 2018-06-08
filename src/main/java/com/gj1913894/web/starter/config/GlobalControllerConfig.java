@@ -32,7 +32,9 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @ControllerAdvice
 public class GlobalControllerConfig {
-	private static final Logger log = LoggerFactory.getLogger(GlobalControllerConfig.class);
+
+	private static final Logger log = LoggerFactory
+			.getLogger(GlobalControllerConfig.class);
 
 	@ExceptionHandler(AsyncRequestTimeoutException.class)
 	private Result handleAsyncRequestTimeoutException(AsyncRequestTimeoutException ex) {
@@ -47,7 +49,8 @@ public class GlobalControllerConfig {
 	}
 
 	@ExceptionHandler(BindException.class)
-	private Result<Void> handleBindException(BindException ex, HttpServletRequest request) {
+	private Result<Void> handleBindException(BindException ex,
+			HttpServletRequest request) {
 		// 只记录第一个参数错误
 		FieldError fieldError = ex.getFieldError();
 		if (fieldError == null) {
@@ -57,20 +60,23 @@ public class GlobalControllerConfig {
 			return Result.error(ex.getMessage());
 		}
 		if (log.isDebugEnabled()) {
-			log.debug("bindException: " + fieldError.getObjectName() + '.' + fieldError.getField() + ':' + fieldError
-					.getRejectedValue() + ", " + fieldError.getDefaultMessage());
+			log.debug("bindException: " + fieldError.getObjectName() + '.'
+					+ fieldError.getField() + ':' + fieldError.getRejectedValue() + ", "
+					+ fieldError.getDefaultMessage());
 		}
 		return Result.error(fieldError.getDefaultMessage());
 	}
 
 	@ExceptionHandler(MissingServletRequestPartException.class)
-	private Result handleMissingServletRequestPartException(MissingServletRequestPartException ex) {
+	private Result handleMissingServletRequestPartException(
+			MissingServletRequestPartException ex) {
 		log.debug("missing part exception: {}", ex.getMessage());
 		return Result.error(ex.getMessage());
 	}
 
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	private Result handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+	private Result handleMethodArgumentNotValidException(
+			MethodArgumentNotValidException ex) {
 		return null;
 	}
 
@@ -95,12 +101,14 @@ public class GlobalControllerConfig {
 	}
 
 	@ExceptionHandler(ServletRequestBindingException.class)
-	private Result handleServletRequestBindingException(ServletRequestBindingException ex) {
+	private Result handleServletRequestBindingException(
+			ServletRequestBindingException ex) {
 		return null;
 	}
 
 	@ExceptionHandler(MissingServletRequestParameterException.class)
-	private Result handleMissingServletRequestParameter(MissingServletRequestParameterException ex) {
+	private Result handleMissingServletRequestParameter(
+			MissingServletRequestParameterException ex) {
 		return null;
 	}
 
@@ -110,17 +118,20 @@ public class GlobalControllerConfig {
 	}
 
 	@ExceptionHandler(HttpMediaTypeNotAcceptableException.class)
-	private Result handleHttpMediaTypeNotAcceptable(HttpMediaTypeNotAcceptableException ex) {
+	private Result handleHttpMediaTypeNotAcceptable(
+			HttpMediaTypeNotAcceptableException ex) {
 		return null;
 	}
 
 	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-	private Result handleHttpMediaTypeNotSupported(HttpMediaTypeNotSupportedException ex) {
+	private Result handleHttpMediaTypeNotSupported(
+			HttpMediaTypeNotSupportedException ex) {
 		return null;
 	}
 
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-	private Result handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
+	private Result handleHttpRequestMethodNotSupported(
+			HttpRequestMethodNotSupportedException ex) {
 		return null;
 	}
 
@@ -140,4 +151,5 @@ public class GlobalControllerConfig {
 		String requestURI = request.getRequestURI();
 		return "";
 	}
+
 }

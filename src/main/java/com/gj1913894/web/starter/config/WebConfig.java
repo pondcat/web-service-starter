@@ -19,9 +19,11 @@ import java.util.List;
 
 /**
  *
- * 启用@EnableWebMvc后, 会导致某些spring-boot-starter自动配置失效, 如springfox自动配置的webjars和swagger-ui等资源映射失效,
+ * 启用@EnableWebMvc后, 会导致某些spring-boot-starter自动配置失效,
+ * 如springfox自动配置的webjars和swagger-ui等资源映射失效,
  * 需手动配置{@link #addResourceHandlers(ResourceHandlerRegistry)}:
  * <code>/webjars/** -> classpath:/META-INF/resources/webjars/, swagger-ui.html -> classpath:/META-INF/resources/</code>
+ *
  * @author gejian at 2018/5/13 23:46
  */
 @Configuration
@@ -33,14 +35,16 @@ public class WebConfig implements WebMvcConfigurer {
 		while (it.hasNext()) {
 			HttpMessageConverter<?> next = it.next();
 			String name = next.getClass().getName();
-			if (name.startsWith("xml.MappingJackson", "org.springframework.http.converter.".length())
-					|| name.startsWith("json.MappingJackson", "org.springframework.http.converter.".length())) {
+			if (name.startsWith("xml.MappingJackson",
+					"org.springframework.http.converter.".length())
+					|| name.startsWith("json.MappingJackson",
+					"org.springframework.http.converter.".length())) {
 				it.remove();
 			}
 		}
 		FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
-		converter.setSupportedMediaTypes(
-				Arrays.asList(MediaType.APPLICATION_JSON_UTF8, MediaType.APPLICATION_JSON, MediaType.ALL));
+		converter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON_UTF8,
+				MediaType.APPLICATION_JSON, MediaType.ALL));
 		converters.add(converter);
 	}
 
@@ -48,8 +52,10 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new HandlerInterceptor() {
 			@Override
-			public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-				String matchingPattern = (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
+			public boolean preHandle(HttpServletRequest request,
+					HttpServletResponse response, Object handler) throws Exception {
+				String matchingPattern = (String) request
+						.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
 				if (matchingPattern == null) {
 					// 以/api开头的必须有handlerMapping处理
 					return false;
@@ -61,12 +67,17 @@ public class WebConfig implements WebMvcConfigurer {
 			}
 
 			@Override
-			public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+			public void postHandle(HttpServletRequest request,
+					HttpServletResponse response, Object handler,
+					ModelAndView modelAndView) throws Exception {
 			}
 
 			@Override
-			public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+			public void afterCompletion(HttpServletRequest request,
+					HttpServletResponse response, Object handler, Exception ex)
+					throws Exception {
 			}
 		}).addPathPatterns("/api/**");
 	}
+
 }

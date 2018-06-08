@@ -9,6 +9,8 @@ import feign.RequestLine;
  */
 @FeignClient(value = "name", url = "http://f.apiplus.net")
 public interface SscService {
+
 	@RequestLine("GET /cqssc.json")
 	CqSsc<CqSsc.Result> cqssc();
+
 }

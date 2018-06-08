@@ -39,38 +39,33 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 @EnableSwagger2
 @Import({BeanValidatorPluginsConfiguration.class})
 public class Swagger2Config {
-	@Autowired private TypeResolver typeResolver;
+
+	@Autowired
+	private TypeResolver typeResolver;
 
 	private static List<Parameter> commonParameters = null;
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder()
-				.title("Springfox demo API")
-				.description("this is a springfox api demo")
-				.build();
+		return new ApiInfoBuilder().title("Springfox demo API")
+				.description("this is a springfox api demo").build();
 	}
 
 	@Bean
 	public Docket controller() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName("api-web")
-				.apiInfo(apiInfo())
-				.select()
-				.apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.ant("/web/**"))
-				.build()
-				.pathMapping("/")
+		return new Docket(DocumentationType.SWAGGER_2).groupName("api-web")
+				.apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.ant("/web/**")).build().pathMapping("/")
 				.directModelSubstitute(LocalDate.class, String.class)
 				.genericModelSubstitutes(ResponseEntity.class)
-				.alternateTypeRules(
-						newRule(typeResolver.resolve(DeferredResult.class,
-								typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
-								typeResolver.resolve(WildcardType.class)))
-				.useDefaultResponseMessages(false)
-				.enableUrlTemplating(true)
+				.alternateTypeRules(newRule(
+						typeResolver.resolve(DeferredResult.class,
+								typeResolver.resolve(ResponseEntity.class,
+										WildcardType.class)),
+						typeResolver.resolve(WildcardType.class)))
+				.useDefaultResponseMessages(false).enableUrlTemplating(true)
 				.globalOperationParameters(operationParameters())
 				.tags(new Tag("Pet Service", "All apis relating to pets"))
-//				.additionalModels(typeResolver.resolve(AdditionalModel.class))
+				// .additionalModels(typeResolver.resolve(AdditionalModel.class))
 				;
 	}
 
@@ -88,91 +83,70 @@ public class Swagger2Config {
 		return commonParameters;
 	}
 
-	private Parameter parameter(String name, String description, ModelRef modelRef, String parameterType, boolean required) {
-		return new ParameterBuilder().name(name).description(description).modelRef(modelRef)
-				.parameterType(parameterType).required(required).build();
+	private Parameter parameter(String name, String description, ModelRef modelRef,
+			String parameterType, boolean required) {
+		return new ParameterBuilder().name(name).description(description)
+				.modelRef(modelRef).parameterType(parameterType).required(required)
+				.build();
 	}
 
 	@Bean
 	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName("api-projectName")
-				.apiInfo(apiInfo())
-				.select()
-				.apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.ant("/api/**"))
-				.build()
-				.pathMapping("/")
+		return new Docket(DocumentationType.SWAGGER_2).groupName("api-projectName")
+				.apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.ant("/api/**")).build().pathMapping("/")
 				.directModelSubstitute(LocalDate.class, String.class)
 				.genericModelSubstitutes(ResponseEntity.class)
-				.alternateTypeRules(
-						newRule(typeResolver.resolve(DeferredResult.class,
-								typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
-								typeResolver.resolve(WildcardType.class)))
-				.useDefaultResponseMessages(false)
-				.enableUrlTemplating(true)
+				.alternateTypeRules(newRule(
+						typeResolver.resolve(DeferredResult.class,
+								typeResolver.resolve(ResponseEntity.class,
+										WildcardType.class)),
+						typeResolver.resolve(WildcardType.class)))
+				.useDefaultResponseMessages(false).enableUrlTemplating(true)
 				.globalOperationParameters(
-						newArrayList(new ParameterBuilder()
-								.name("someGlobalParameter")
+						newArrayList(new ParameterBuilder().name("someGlobalParameter")
 								.description("Description of someGlobalParameter")
-								.modelRef(new ModelRef("string"))
-								.parameterType("query")
-								.required(true)
-								.build()))
+								.modelRef(new ModelRef("string")).parameterType("query")
+								.required(true).build()))
 				.tags(new Tag("Pet Service", "All apis relating to pets"))
-//				.additionalModels(typeResolver.resolve(AdditionalModel.class))
+				// .additionalModels(typeResolver.resolve(AdditionalModel.class))
 				;
 	}
 
 	@Bean
 	public Docket openapi() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName("openapi-projectName")
-				.apiInfo(apiInfo())
-				.select()
-				.apis(RequestHandlerSelectors.any())
-				.paths(PathSelectors.ant("/openapi/**"))
-				.build()
-				.pathMapping("/")
+		return new Docket(DocumentationType.SWAGGER_2).groupName("openapi-projectName")
+				.apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.ant("/openapi/**")).build().pathMapping("/")
 				.directModelSubstitute(LocalDate.class, String.class)
 				.genericModelSubstitutes(ResponseEntity.class)
-				.alternateTypeRules(
-						newRule(typeResolver.resolve(DeferredResult.class,
-								typeResolver.resolve(ResponseEntity.class, WildcardType.class)),
-								typeResolver.resolve(WildcardType.class)))
-				.useDefaultResponseMessages(false)
-				.enableUrlTemplating(true)
+				.alternateTypeRules(newRule(
+						typeResolver.resolve(DeferredResult.class,
+								typeResolver.resolve(ResponseEntity.class,
+										WildcardType.class)),
+						typeResolver.resolve(WildcardType.class)))
+				.useDefaultResponseMessages(false).enableUrlTemplating(true)
 				.globalOperationParameters(
-						newArrayList(new ParameterBuilder()
-								.name("someGlobalParameter")
+						newArrayList(new ParameterBuilder().name("someGlobalParameter")
 								.description("Description of someGlobalParameter")
-								.modelRef(new ModelRef("string"))
-								.parameterType("query")
-								.required(true)
-								.build()))
+								.modelRef(new ModelRef("string")).parameterType("query")
+								.required(true).build()))
 				.tags(new Tag("Pet Service", "All apis relating to pets"))
-//				.additionalModels(typeResolver.resolve(AdditionalModel.class))
+				// .additionalModels(typeResolver.resolve(AdditionalModel.class))
 				;
 	}
 
 	@Bean
 	UiConfiguration uiConfig() {
-		return UiConfigurationBuilder.builder()
-				.deepLinking(true)
-				.displayOperationId(false)
-				.defaultModelsExpandDepth(1)
-				.defaultModelExpandDepth(1)
-				.defaultModelRendering(ModelRendering.EXAMPLE)
-				.displayRequestDuration(false)
-				.docExpansion(DocExpansion.LIST)
-				.filter(false)
-				.maxDisplayedTags(null)
-				.operationsSorter(OperationsSorter.ALPHA)
-				.showExtensions(false)
+		return UiConfigurationBuilder.builder().deepLinking(true)
+				.displayOperationId(false).defaultModelsExpandDepth(1)
+				.defaultModelExpandDepth(1).defaultModelRendering(ModelRendering.EXAMPLE)
+				.displayRequestDuration(false).docExpansion(DocExpansion.LIST)
+				.filter(false).maxDisplayedTags(null)
+				.operationsSorter(OperationsSorter.ALPHA).showExtensions(false)
 				.tagsSorter(TagsSorter.ALPHA)
 				.supportedSubmitMethods(UiConfiguration.Constants.DEFAULT_SUBMIT_METHODS)
-				.validatorUrl(null)
-				.build();
+				.validatorUrl(null).build();
 	}
 
 }

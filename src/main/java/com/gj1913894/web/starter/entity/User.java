@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
  */
 @Table(name = "user")
 public class User {
+
 	@Id
 	@GeneratedValue(generator = "JDBC")
 	private Long id;
@@ -74,4 +75,5 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 }

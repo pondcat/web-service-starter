@@ -18,6 +18,7 @@ import java.nio.charset.StandardCharsets;
 @Configuration
 @ConfigurationProperties(prefix = "feign.client.scan")
 public class FeignConfig {
+
 	private final Request.Options defaultRequestOptions = new Request.Options(1000, 3500);
 
 	private final Retryer.Default defaultRetryer = new Retryer.Default(5000, 5000, 3);
@@ -71,13 +72,9 @@ public class FeignConfig {
 	}
 
 	private <T> T defaultBuilder(Class<T> returnType, String url) {
-		return Feign.builder()
-				.logger(new Slf4jLogger(returnType))
-				.encoder(feignEncoder)
-				.decoder(feignDecoder)
-				.options(defaultRequestOptions)
-				.retryer(defaultRetryer)
-				.target(returnType, url);
+		return Feign.builder().logger(new Slf4jLogger(returnType)).encoder(feignEncoder)
+				.decoder(feignDecoder).options(defaultRequestOptions)
+				.retryer(defaultRetryer).target(returnType, url);
 	}
 
 }

@@ -18,7 +18,10 @@ import java.time.LocalDateTime;
  */
 @Service
 public class DemoService implements Serializable {
-	@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") @Autowired private UserMapper userMapper;
+
+	@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+	@Autowired
+	private UserMapper userMapper;
 
 	@Transactional
 	public LocalDateTime serve(@Validated User user1) {
@@ -30,13 +33,14 @@ public class DemoService implements Serializable {
 		user.setGrade("4");
 		user.setCtime(LocalDateTime.now());
 		userMapper.insert(user);
-		TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronizationAdapter() {
-			@Override
-			public void afterCommit() {
-				user.setId(null);
-				userMapper.insert(user);
-			}
-		});
+		TransactionSynchronizationManager
+				.registerSynchronization(new TransactionSynchronizationAdapter() {
+					@Override
+					public void afterCommit() {
+						user.setId(null);
+						userMapper.insert(user);
+					}
+				});
 
 		return LocalDateTime.now();
 	}

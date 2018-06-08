@@ -6,6 +6,7 @@ import com.gj1913894.web.starter.entity.User;
  * @author 孙权
  */
 public class Student extends User {
+
 	private String grade;
 
 	public String getGrade() {
@@ -15,4 +16,5 @@ public class Student extends User {
 	public void setGrade(String grade) {
 		this.grade = grade;
 	}
+
 }
