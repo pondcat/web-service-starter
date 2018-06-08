@@ -39,7 +39,7 @@ public class DemoController {
 	}
 
 	@RequestMapping("tt")
-	public User t2(User user) {
+	public User t2(@RequestBody User user) {
 		user.setCtime(LocalDateTime.now());
 		return user;
 	}

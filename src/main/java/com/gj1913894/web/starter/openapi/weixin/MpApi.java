@@ -1,7 +1,5 @@
 package com.gj1913894.web.starter.openapi.weixin;
 
-import com.google.common.hash.Hashing;
-import com.google.common.io.BaseEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import pondcat.commons.combine.hash.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,8 +42,7 @@ public class MpApi {
 		// 明文模式, 不作校验
 		String[] arrays = {timestamp, nonce, token};
 		Arrays.sort(arrays);
-		byte[] bytes = Hashing.sha1().hashBytes((arrays[0] + arrays[1] + arrays[2]).getBytes()).asBytes();
-		String encode = BaseEncoding.base16().lowerCase().encode(bytes);
+		String encode = DigestUtils.sha1Hex((arrays[0] + arrays[1] + arrays[2]).getBytes());
 		if (signature.equalsIgnoreCase(encode)) {
 			return echostr;
 		} else {

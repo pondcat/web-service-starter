@@ -5,7 +5,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
@@ -17,7 +16,6 @@ public class User {
 	@GeneratedValue(generator = "JDBC")
 	private Long id;
 
-	@NotNull
 	private String mobile;
 
 	private String realName;

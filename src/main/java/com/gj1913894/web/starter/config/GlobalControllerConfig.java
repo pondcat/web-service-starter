@@ -36,11 +36,13 @@ public class GlobalControllerConfig {
 
 	@ExceptionHandler(AsyncRequestTimeoutException.class)
 	private Result handleAsyncRequestTimeoutException(AsyncRequestTimeoutException ex) {
-		return null;
+		// http status 503
+		return Result.error(Result.CODE_NOT_AVAILABLE, ex.getMessage());
 	}
 
 	@ExceptionHandler(NoHandlerFoundException.class)
 	private Result handleNoHandlerFoundException(NoHandlerFoundException ex) {
+		// http status 404
 		return null;
 	}
 
