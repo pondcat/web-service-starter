@@ -3,6 +3,8 @@ buildscript {
 		springBootVersion = '2.0.2.RELEASE'
 	}
 	repositories {
+//		gradle脚本依赖仓库
+		mavenLocal()
 		mavenCentral()
 	}
 	dependencies {
@@ -22,6 +24,8 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
+//	项目依赖仓库
+	mavenLocal()
 	mavenCentral()
 	jcenter()
     maven { url 'https://jitpack.io' }
