@@ -1,5 +1,7 @@
 package com.gj1913894.web.starter.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("${server.error.path:${error.path:/error}}")
 public class WebErrorController implements ErrorController {
 
+	private static final Logger log = LoggerFactory.getLogger(WebErrorController.class);
+
 	private final ServerProperties serverProperties;
 
 	public WebErrorController(ServerProperties serverProperties) {
@@ -33,9 +37,9 @@ public class WebErrorController implements ErrorController {
 	@RequestMapping
 	@ResponseBody
 	public Result<Void> error(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println(request);
-		System.out.println(response);
-		System.out.println(response.getStatus());
+		log.debug(request.toString());
+		log.debug(response.toString());
+		// todo 找出藏在request/response中的错误来
 		return Result.error("");
 	}
 

@@ -8,6 +8,7 @@ logging:
     com.gj1913894.web.starter: debug
     org.mariadb.jdbc: debug
     org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener: info
+    org.springframework.web.filter.CommonsRequestLoggingFilter: trace
 
 spring:
   datasource:

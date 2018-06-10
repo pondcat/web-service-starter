@@ -61,7 +61,6 @@ public class MpApi {
 	public void receiveMessage(HttpServletRequest request) throws IOException {
 		String s = StreamUtils.copyToString(request.getInputStream(),
 				StandardCharsets.UTF_8);
-		System.out.println(s);
 	}
 
 	@GetMapping("image/scanCode")
