@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pondcat.commons.combine.Result;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 
 /**
@@ -33,10 +32,10 @@ public class DemoController {
 	}
 
 	@PostMapping("serve")
-	public Result<String> serve(@Valid User user) {
+	public Result<String> serve(@RequestBody User user) {
 		log.debug(user.toString());
-		LocalDateTime dateTime = demoService.serve(user);
-		return Result.ok(dateTime.toString());
+//		LocalDateTime dateTime = demoService.serve(user);
+		return Result.ok(LocalDateTime.now().toString());
 	}
 
 	@PostMapping(value = "tt", params = { "id=1" })

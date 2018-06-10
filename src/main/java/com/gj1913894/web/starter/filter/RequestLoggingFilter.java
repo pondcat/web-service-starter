@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @WebFilter(filterName = "fequestLoggingFilter", urlPatterns = {"/api/*", "/openapi/*"})
 public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
-	private HttpServletRequest request;
+	private boolean includePayload = false;
 
 	private static final AtomicInteger atomInt = new AtomicInteger(0);
 
@@ -38,13 +38,17 @@ public class RequestLoggingFilter extends AbstractRequestLoggingFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-		this.request = request;
+		includePayload = isIncludePayload(request);
 		super.doFilterInternal(request, response, filterChain);
+	}
+
+	private boolean isIncludePayload(HttpServletRequest request) {
+		String contentType = request.getContentType();
+		return contentType != null && (contentType.startsWith(MediaType.APPLICATION_JSON_VALUE) || contentType.startsWith(MediaType.APPLICATION_XML_VALUE));
 	}
 
 	@Override
 	protected boolean isIncludePayload() {
-		String contentType = request.getContentType();
-		return contentType != null && (contentType.startsWith(MediaType.APPLICATION_JSON_VALUE) || contentType.startsWith(MediaType.APPLICATION_XML_VALUE));
+		return includePayload;
 	}
 }
